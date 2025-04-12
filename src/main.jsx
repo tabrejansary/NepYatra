@@ -9,11 +9,24 @@ import { Toaster } from './components/ui/sonner.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Viewtrip from './view-trip/[tripId]/index.jsx'
 import MyTrips from './my-trips/index.jsx'
+import About from './pages/About.jsx'
+import Contact from './pages/Contact.jsx'
+
 
 const router = createBrowserRouter([{
   path: '/',
   element: <App />
 },
+{
+  path: '/about',
+  element: <About />   
+},
+{
+  path: '/contact',
+  element: <Contact />
+}
+,
+
 {
   path:'/create-trip',
   element: <CreateTrip />
@@ -31,7 +44,7 @@ const router = createBrowserRouter([{
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
+    <GoogleOAuthProvider clientId="149859274442-t2ldpebc37ihcd2tt3t2gr9oobe2jqvk.apps.googleusercontent.com">
       <Header />
       <Toaster/>
       <RouterProvider router={router}/>

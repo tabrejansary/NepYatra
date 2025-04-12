@@ -45,38 +45,55 @@ function Header() {
   }
 
   return (
-    <div className='shadow-sm flex justify-between items-center px-6'>
-      <img src="/logo.svg" alt="Logo" />
-      <div>
-        {user ?
-          <div className='flex items-center gap-3'>
-            <a href="/create-trip">
-            <Button variant="outline" className="rounded-full">+ Create Trip</Button>
-            </a>
-            <a href="/my-trips">
-            <Button variant="outline" className="rounded-full">My Trips</Button>
-            </a>
-            <Popover>
-              <PopoverTrigger>             
-                <img src={user?.picture} alt="" className='h-[35px] w-[35px] rounded-full' />
-              </PopoverTrigger>
-              <PopoverContent>
-                <h2 className='cursor-pointer' onClick={()=>{
-                  googleLogout();
-                  localStorage.clear();
-                  window.location.reload();
-                }}>Logout</h2>
-              </PopoverContent>
-            </Popover>
+    <div className='shadow-sm sticky top-0 bg-white z-50'>
+      <div className='max-w-7xl mx-auto flex justify-between items-center px-6 py-4'>
+        {/* Left side - Brand name only */}
+        <h1 className='text-3xl font-bold text-[#f56551]'>NepYatra</h1>
+        
+        {/* Right side - Navigation and user controls */}
+        <div className='flex items-center gap-8'>
+          {/* Navigation links - moved to right */}
+          <nav className='hidden md:flex gap-8'>
+            <a href="/" className='text-gray-700 hover:text-[#f56551] font-bold'>Home</a>
+            <a href="/about" className='text-gray-700 hover:text-[#f56551] font-bold'>About</a>
+            <a href="/contact" className='text-gray-700 hover:text-[#f56551] font-bold'>Contact</a>
+          </nav>
 
-          </div> : <Button onClick={()=>setOpenDialog(true)}>Sign In</Button>}
+          {/* User controls */}
+          {user ? (
+            <div className='flex items-center gap-3'>
+              <a href="/create-trip">
+                <Button variant="outline" className="rounded-full">+ Create Trip</Button>
+              </a>
+              <a href="/my-trips">
+                <Button variant="outline" className="rounded-full">My Trips</Button>
+              </a>
+              <Popover>
+                <PopoverTrigger>             
+                  <img src={user?.picture} alt="" className='h-[35px] w-[35px] rounded-full' />
+                </PopoverTrigger>
+                <PopoverContent>
+                  <h2 className='cursor-pointer' onClick={()=>{
+                    googleLogout();
+                    localStorage.clear();
+                    window.location.reload();
+                  }}>Logout</h2>
+                </PopoverContent>
+              </Popover>
+            </div>
+          ) : (
+            <Button onClick={()=>setOpenDialog(true)} className="bg-[#f56551] hover:bg-[#e05544]">
+              Sign In
+            </Button>
+          )}
+        </div>
       </div>
 
       <Dialog open={openDialog}>
         <DialogContent>
           <DialogHeader>
             <DialogDescription>
-              <img src="/logo.svg" alt="logo" width="100px" className='items-center' />
+              <h1 className='text-2xl font-bold text-[#f56551] mb-2'>NepYatra</h1>
               <h2 className='font-bold text-lg'>Sign In to check out your travel plan</h2>
               <p>Sign in to the App with Google authentication securely</p>
               <Button
@@ -88,7 +105,6 @@ function Header() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-
     </div>
   )
 }
