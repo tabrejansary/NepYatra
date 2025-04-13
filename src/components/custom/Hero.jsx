@@ -195,7 +195,7 @@ const Hero = () => {
               <h4 className="font-bold mb-4">Resources</h4>
               <ul className="space-y-2">
                 <li><Link to="/blog" className="text-gray-400 hover:text-white">Travel Blog</Link></li>
-                <li><Link to="/guides" className="text-gray-400 hover:text-white">Destination Guides</Link></li>
+                <li><Link to="/destination-guide" className="text-gray-400 hover:text-white">Destination Guides</Link></li>
                 <li><Link to="/faq" className="text-gray-400 hover:text-white">FAQ</Link></li>
               </ul>
             </div>

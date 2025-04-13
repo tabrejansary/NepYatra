@@ -11,36 +11,44 @@ import Viewtrip from './view-trip/[tripId]/index.jsx'
 import MyTrips from './my-trips/index.jsx'
 import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
+import DestinationGuide from './pages/DestinationGuide.jsx'
+import FAQ from './pages/faq.jsx' // 
 
 
-const router = createBrowserRouter([{
-  path: '/',
-  element: <App />
-},
-{
-  path: '/about',
-  element: <About />   
-},
-{
-  path: '/contact',
-  element: <Contact />
-}
-,
-
-{
-  path:'/create-trip',
-  element: <CreateTrip />
-},
-{
-  path: '/view-trip/:tripId',
-  element: <Viewtrip />
-},
-{
-  path: '/my-trips',
-  element: <MyTrips />
-}
-
-])
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />
+  },
+  {
+    path: '/about',
+    element: <About />
+  },
+  {
+    path: '/contact',
+    element: <Contact />
+  },
+  {
+    path: '/create-trip',
+    element: <CreateTrip />
+  },
+  {
+    path: '/view-trip/:tripId',
+    element: <Viewtrip />
+  },
+  {
+    path: '/my-trips',
+    element: <MyTrips />
+  },
+  {
+    path: '/destination-guide',
+    element: <DestinationGuide />
+  },
+  {
+    path: 'faq',
+    element: <FAQ />
+  }
+]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
