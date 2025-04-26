@@ -77,6 +77,7 @@ function CreateTrip() {
     const user = JSON.parse(localStorage.getItem('user'))
     const docId = Date.now().toString();
     // Add a new document in collection "AITrips"
+    
     await setDoc(doc(db, "AITrips", docId), {
       userSelection: formData,
       tripData: JSON.parse(TripData),
@@ -173,9 +174,10 @@ function CreateTrip() {
         <DialogContent>
           <DialogHeader>
             <DialogDescription>
-              <img src="/logo.svg" alt="logo" width="100px" className='items-center' />
-              <h2 className='font-bold text-lg'>Sign In to check out your travel plan</h2>
-              <p>Sign in to the App with Google authentication securely</p>
+            <h1 className="text-[#f56551] text-2xl font-bold items-center">NepYatra</h1>
+<h2 className='font-bold text-lg'>Sign In to check out your travel plan</h2>
+<p>Sign in to the App with Google authentication securely</p>
+
               <Button
                 onClick={login}
                 className="w-full mt-6 flex gap-4 items-center">

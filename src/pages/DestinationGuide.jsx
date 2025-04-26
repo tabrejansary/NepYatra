@@ -74,9 +74,10 @@ const HowToUseNepYatra = () => {
                     <h4 className="font-bold mb-4">Quick Links</h4>
                     <ul className="space-y-2">
                       <li><Link to="/" className="text-gray-400 hover:text-white">Home</Link></li>
-                      <li><Link to="/about" className="text-gray-400 hover:text-white">About</Link></li>
-                      <li><Link to="/contact" className="text-gray-400 hover:text-white">Contact</Link></li>
+                    
                       <li><Link to="/create-trip" className="text-gray-400 hover:text-white">Plan a Trip</Link></li>
+                      <li><Link to="/terms-&-conditions" className="text-gray-400 hover:text-white">Terms & Conditions</Link></li>
+                      <li><Link to="/Privacy-Policy" className="text-gray-400 hover:text-white">Privacy policy</Link></li>
                     </ul>
                   </div>
                   <div>

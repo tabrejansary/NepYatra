@@ -1,80 +1,83 @@
 import React from 'react';
-import { Mail, Smartphone, MapPin } from 'lucide-react';
-import { Button } from "../components/ui/button";
 
-const Contact = () => {
+const TermsConditions = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-grow">
-        <div className="max-w-5xl mx-auto px-4 py-16">
-          
-          {/* Hero Section */}
-          <section className="text-center mb-20">
-            <h1 className="text-5xl font-bold text-[#f56551] mb-6">Contact Us</h1>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Have a question or need help planning your trip? Our team is here to assist you with anything related to your travel journey. Feel free to reach out!
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div className="px-4 py-5 sm:px-6">
+            <h1 className="text-3xl font-bold text-gray-900">Terms & Conditions</h1>
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">
+              Last updated: {new Date().toLocaleDateString()}
             </p>
-          </section>
+          </div>
+          <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+            <div className="py-4 sm:py-5 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-6">
+              <div className="prose max-w-none">
+                <h2 className="text-xl font-semibold mb-4">1. Acceptance of Terms</h2>
+                <p className="mb-6">
+                  By accessing or using NepYatra's services, you agree to be bound by these Terms and Conditions. 
+                  If you do not agree to all the terms, you may not access or use our services.
+                </p>
 
-          {/* Contact Info */}
-          <section className="grid md:grid-cols-3 gap-8 text-center mb-20">
-            <div className="flex flex-col items-center">
-              <Mail className="text-[#f56551] mb-4" size={36} />
-              <h3 className="text-lg font-semibold text-gray-800 mb-1">Email Us</h3>
-              <p className="text-gray-600">support@nepyatra.com</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <Smartphone className="text-[#f56551] mb-4" size={36} />
-              <h3 className="text-lg font-semibold text-gray-800 mb-1">Call Us</h3>
-              <p className="text-gray-600">+977-9800000000</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <MapPin className="text-[#f56551] mb-4" size={36} />
-              <h3 className="text-lg font-semibold text-gray-800 mb-1">Visit Us</h3>
-              <p className="text-gray-600">Kathmandu, Nepal</p>
-            </div>
-          </section>
+                <h2 className="text-xl font-semibold mb-4">2. Description of Service</h2>
+                <p className="mb-6">
+                  NepYatra provides an AI-powered travel planning platform that offers personalized trip 
+                  recommendations, itinerary planning, and travel-related information. Our services may change 
+                  or be updated from time to time without notice.
+                </p>
 
-          {/* Contact Form */}
-          <section className="bg-white p-8 rounded-xl shadow-md max-w-3xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Send Us a Message</h2>
-            <form className="space-y-6">
-              <div>
-                <label className="block mb-1 font-semibold text-gray-700">Name</label>
-                <input 
-                  type="text" 
-                  placeholder="Your Name" 
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f56551]"
-                />
+                <h2 className="text-xl font-semibold mb-4">3. User Responsibilities</h2>
+                <ul className="list-disc pl-5 mb-6 space-y-2">
+                  <li>You must be at least 18 years old to use our services</li>
+                  <li>You are responsible for maintaining the confidentiality of your account information</li>
+                  <li>You agree to provide accurate and complete information when using our services</li>
+                  <li>You are responsible for all activities that occur under your account</li>
+                </ul>
+
+                <h2 className="text-xl font-semibold mb-4">4. Privacy Policy</h2>
+                <p className="mb-6">
+                  Your use of our services is also governed by our Privacy Policy, which explains how we collect, 
+                  use, and protect your personal information. Please review our Privacy Policy separately.
+                </p>
+
+                <h2 className="text-xl font-semibold mb-4">5. Intellectual Property</h2>
+                <p className="mb-6">
+                  All content included on our platform, such as text, graphics, logos, images, and software, 
+                  is the property of NepYatra or its content suppliers and protected by intellectual property laws.
+                </p>
+
+                <h2 className="text-xl font-semibold mb-4">6. Limitation of Liability</h2>
+                <p className="mb-6">
+                  NepYatra shall not be liable for any indirect, incidental, special, consequential, or punitive 
+                  damages resulting from your use of or inability to use our services. We do not guarantee the 
+                  accuracy or completeness of any information provided through our services.
+                </p>
+
+                <h2 className="text-xl font-semibold mb-4">7. Changes to Terms</h2>
+                <p className="mb-6">
+                  We reserve the right to modify these terms at any time. We will notify users of significant 
+                  changes, but it's your responsibility to review the terms periodically for updates.
+                </p>
+
+                <h2 className="text-xl font-semibold mb-4">8. Governing Law</h2>
+                <p className="mb-6">
+                  These Terms shall be governed by and construed in accordance with the laws of Nepal, without 
+                  regard to its conflict of law provisions.
+                </p>
+
+                <h2 className="text-xl font-semibold mb-4">9. Contact Information</h2>
+                <p>
+                  If you have any questions about these Terms, please contact us at info@nepyatra.com.
+                </p>
               </div>
-              <div>
-                <label className="block mb-1 font-semibold text-gray-700">Email</label>
-                <input 
-                  type="email" 
-                  placeholder="you@example.com" 
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f56551]"
-                />
-              </div>
-              <div>
-                <label className="block mb-1 font-semibold text-gray-700">Message</label>
-                <textarea 
-                  rows="5" 
-                  placeholder="Write your message here..." 
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f56551]"
-                ></textarea>
-              </div>
-              <div className="text-center">
-                <Button type="submit" className="bg-[#f56551] text-white px-6 py-2 rounded-lg hover:bg-[#e15445] text-lg">
-                  Send Message
-                </Button>
-              </div>
-            </form>
-          </section>
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
 
-     {/* Footer (from previous design) */}
-     <footer className="bg-gray-900 text-white py-12 px-4">
+      {/* Footer (from previous design) */}
+      <footer className="bg-gray-900 text-white py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
@@ -87,17 +90,16 @@ const Contact = () => {
               <h4 className="font-bold mb-4">Quick Links</h4>
               <ul className="space-y-2">
                 <li><a href="/" className="text-gray-400 hover:text-white">Home</a></li>
-                <li><a href="/create-trip" className="text-gray-400 hover:text-white">Plan a Trip</a></li>
+                <li><a href="/about" className="text-gray-400 hover:text-white">About</a></li>
                 <li><a href="/terms-&-conditions" className="text-gray-400 hover:text-white">Terms & Conditions</a></li>
                 <li><a href="/Privacy-Policy" className="text-gray-400 hover:text-white">Privacy policy</a></li>
-               
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-4">Resources</h4>
               <ul className="space-y-2">
                 <li><a href="/blog" className="text-gray-400 hover:text-white">Travel Blog</a></li>
-                <li><a href="/destination-guide" className="text-gray-400 hover:text-white">Destination Guides</a></li>
+                <li><a href="/guides" className="text-gray-400 hover:text-white">Destination Guides</a></li>
                 <li><a href="/faq" className="text-gray-400 hover:text-white">FAQ</a></li>
               </ul>
             </div>
@@ -137,4 +139,5 @@ const Contact = () => {
     </div>
   );
 };
-export default Contact;
+
+export default TermsConditions;

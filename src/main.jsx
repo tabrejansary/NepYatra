@@ -13,6 +13,10 @@ import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
 import DestinationGuide from './pages/DestinationGuide.jsx'
 import FAQ from './pages/faq.jsx' // 
+import TermsConditions from './pages/termsconditions.jsx';
+import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
+
+
 
 
 const router = createBrowserRouter([
@@ -47,12 +51,22 @@ const router = createBrowserRouter([
   {
     path: 'faq',
     element: <FAQ />
+  },
+  {
+    path: 'terms-&-conditions',
+    element: <TermsConditions />
+  },
+  {
+    path: 'Privacy-Policy',
+    element: <PrivacyPolicy />
   }
+  
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId="149859274442-t2ldpebc37ihcd2tt3t2gr9oobe2jqvk.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
       <Header />
       <Toaster/>
       <RouterProvider router={router}/>
