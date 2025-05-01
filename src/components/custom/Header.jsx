@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { sendEmailVerification } from "firebase/auth";
 import { Button } from '../ui/button'
 import {
   Popover,
@@ -16,11 +17,17 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { auth, googleProvider } from "../../service/firebaseConfig";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, fetchSignInMethodsForEmail , sendPasswordResetEmail} from "firebase/auth";
 
 function Header() {
   const user = JSON.parse(localStorage.getItem('user'));
   const [openDialog, setOpenDialog] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [showResendForm, setShowResendForm] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
 
   // List of all countries (alphabetical order)
   const countries = [
@@ -90,6 +97,185 @@ function Header() {
     });
   }
 
+  // Add this to your existing state declarations
+const [errors, setErrors] = useState({
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  country: '',
+  terms: ''
+});
+
+// Add these validation functions inside your component
+
+const validateEmail = (email) => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(String(email).toLowerCase());
+};
+
+const validatePassword = (password) => {
+  // At least 8 characters, one uppercase, one lowercase, one number, one special character
+  const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  return re.test(password);
+};
+
+const validateForm = (formData) => {
+  const newErrors = {};
+  
+  // First Name validation
+  if (!formData.firstName.trim()) {
+    newErrors.firstName = 'First name is required';
+  }
+  
+  // Last Name validation
+  if (!formData.lastName.trim()) {
+    newErrors.lastName = 'Last name is required';
+  }
+  
+  // Email validation
+  if (!formData.email) {
+    newErrors.email = 'Email is required';
+  } else if (!validateEmail(formData.email)) {
+    newErrors.email = 'Please enter a valid email address';
+  }
+  
+  // Password validation
+  if (!formData.password) {
+    newErrors.password = 'Password is required';
+  } else if (!validatePassword(formData.password)) {
+    newErrors.password = 'Password must be at least 8 characters with uppercase, lowercase, number, and special character';
+  }
+  
+  // Confirm Password validation
+  if (!formData.confirmPassword) {
+    newErrors.confirmPassword = 'Please confirm your password';
+  } else if (formData.password !== formData.confirmPassword) {
+    newErrors.confirmPassword = 'Passwords do not match';
+  }
+  
+  // Country validation
+  if (!formData.country) {
+    newErrors.country = 'Please select your country';
+  }
+  
+  // Terms validation
+  if (!agreeToTerms) {
+    newErrors.terms = 'You must agree to the terms and conditions';
+  }
+  
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+
+
+const handleRegister = async (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    firstName: e.target.firstName.value,
+    lastName: e.target.lastName.value,
+    email: e.target.email.value,
+    password: e.target.password.value,
+    confirmPassword: e.target.confirmPassword.value,
+    country: e.target.country.value
+  };
+  
+  // Validate form
+  if (!validateForm(formData)) {
+    return;
+  }
+  
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+    const user = userCredential.user;
+    
+    // Send email verification
+    await sendEmailVerification(user);
+    
+    // Store user data in localStorage (but not as logged in)
+    const userData = {
+      uid: user.uid,
+      email: user.email,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      country: formData.country,
+      emailVerified: false
+    };
+    localStorage.setItem('userData', JSON.stringify(userData));
+    
+    // Show success message with instructions
+    alert(`Registration successful! Please check your email (${formData.email}) for verification link.`);
+    
+    // Switch to login view but don't close dialog
+    setIsRegister(false);
+    
+    // Clear form
+    e.target.reset();
+    setAgreeToTerms(false);
+    setErrors({}); // Clear errors
+    
+  } catch (error) {
+    console.error(error);
+    
+    // Handle specific Firebase errors
+    if (error.code === 'auth/email-already-in-use') {
+      setErrors(prev => ({...prev, email: 'This email is already registered'}));
+    } else {
+      alert(error.message);
+    }
+  }
+};
+  // Modify the handleLogin function to check email verification
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+  
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      if (!user.emailVerified) {
+        await auth.signOut();
+        alert("Please verify your email first. Check your inbox.");
+        return;
+      }
+  
+      // Get the stored user data that includes firstName from registration
+      const storedUser = JSON.parse(localStorage.getItem('userData')) || {};
+      
+      localStorage.setItem('user', JSON.stringify({ 
+        uid: user.uid, 
+        email: user.email,
+        firstName: storedUser.firstName || user.displayName?.split(' ')[0] || 'User'
+      }));
+      setOpenDialog(false);
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
+  }
+
+  const handleForgotPassword = async () => {
+    if (!forgotPasswordEmail) {
+      alert("Please enter your email address");
+      return;
+    }
+  
+    try {
+      await sendPasswordResetEmail(auth, forgotPasswordEmail);
+      alert(`Password reset email sent to ${forgotPasswordEmail}. Please check your inbox.`);
+      setShowForgotPassword(false);
+      setForgotPasswordEmail('');
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      alert(`Error: ${error.message}`);
+    }
+  };
+
   return (
     <div className='shadow-sm sticky top-0 bg-white z-50'>
       <div className='max-w-7xl mx-auto flex justify-between items-center px-6 py-4'>
@@ -115,9 +301,16 @@ function Header() {
                 <Button variant="outline" className="rounded-full">My Trips</Button>
               </a>
               <Popover>
-                <PopoverTrigger>             
-                  <img src={user?.picture} alt="" className='h-[35px] w-[35px] rounded-full' />
-                </PopoverTrigger>
+              <PopoverTrigger className="flex items-center gap-2">
+  <span className="hidden md:inline">
+    Hey, {user?.firstName || user?.given_name || 'User'}
+  </span>
+  <img 
+    src={user?.picture || "https://via.placeholder.com/35"} 
+    alt="Profile" 
+    className='h-[35px] w-[35px] rounded-full' 
+  />
+</PopoverTrigger>
                 <PopoverContent>
                   <h2 className='cursor-pointer' onClick={()=>{
                     googleLogout();
@@ -163,60 +356,116 @@ function Header() {
                   <h2 className='font-bold text-lg text-black'>Create your account</h2>
                   <p className="text-gray-600">Join us to start planning your trips</p>
                   
-                  {/* Registration Form */}
-                  <form className="mt-4 space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required />
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Email</label>
-                      <input type="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Password</label>
-                      <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
-                      <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Country</label>
-                      <select className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required>
-                        <option value="">Select Country</option>
-                        {countries.map((country) => (
-                          <option key={country} value={country}>
-                            {country}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    
-                    <div className="flex items-center">
-                      <input type="checkbox" id="terms" className="h-4 w-4 text-[#f56551] focus:ring-[#f56551] border-gray-300 rounded" required />
-                      <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
-  I agree to the <a href="/terms-&-conditions" className="text-[#f56551] mb-2hover:underline">Terms & Conditions</a> and <a href="/Privacy-Policy" className="text-[#f56551] mb-2 hover:underline">Privacy Policy</a>
-</label>
+                  <form className="mt-4 space-y-4" onSubmit={handleRegister}>
+  <div className="grid grid-cols-2 gap-4">
+    <div>
+      <label className="block text-sm font-medium text-gray-700">First Name</label>
+      <input
+        type="text"
+        name="firstName"
+        required
+        className={`mt-1 p-2 w-full border rounded-md ${errors.firstName ? 'border-red-500' : ''}`}
+      />
+      {errors.firstName && <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>}
+    </div>
+    <div>
+      <label className="block text-sm font-medium text-gray-700">Last Name</label>
+      <input
+        type="text"
+        name="lastName"
+        required
+        className={`mt-1 p-2 w-full border rounded-md ${errors.lastName ? 'border-red-500' : ''}`}
+      />
+      {errors.lastName && <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>}
+    </div>
+  </div>
 
-                    </div>
-                    
-                    <div className="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
-                    
-                    <Button type="submit" className="w-full bg-[#f56551] hover:bg-[#e05544]">
-                      Register
-                    </Button>
-                  </form>
+  <div>
+    <label className="block text-sm font-medium text-gray-700">Email</label>
+    <input
+      type="email"
+      name="email"
+      required
+      className={`mt-1 p-2 w-full border rounded-md ${errors.email ? 'border-red-500' : ''}`}
+    />
+    {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+  </div>
+
+  <div>
+    <label className="block text-sm font-medium text-gray-700">Password</label>
+    <input
+      type="password"
+      name="password"
+      required
+      className={`mt-1 p-2 w-full border rounded-md ${errors.password ? 'border-red-500' : ''}`}
+    />
+    {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+    <p className="mt-1 text-xs text-gray-500">
+      Password must be at least 8 characters with uppercase, lowercase, number, and special character
+    </p>
+  </div>
+
+  <div>
+    <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+    <input
+      type="password"
+      name="confirmPassword"
+      required
+      className={`mt-1 p-2 w-full border rounded-md ${errors.confirmPassword ? 'border-red-500' : ''}`}
+    />
+    {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
+  </div>
+
+  <div>
+    <label className="block text-sm font-medium text-gray-700">Country</label>
+    <select
+      name="country"
+      required
+      className={`mt-1 p-2 w-full border rounded-md ${errors.country ? 'border-red-500' : ''}`}
+    >
+      <option value="">Select your country</option>
+      {countries.map((country) => (
+        <option key={country} value={country}>
+          {country}
+        </option>
+      ))}
+    </select>
+    {errors.country && <p className="mt-1 text-sm text-red-600">{errors.country}</p>}
+  </div>
+
+  <div className="flex items-start">
+    <div className="flex items-center h-5">
+      <input
+        id="terms"
+        name="terms"
+        type="checkbox"
+        checked={agreeToTerms}
+        onChange={(e) => setAgreeToTerms(e.target.checked)}
+        className={`focus:ring-[#f56551] h-4 w-4 text-[#f56551] border-gray-300 rounded ${errors.terms ? 'border-red-500' : ''}`}
+      />
+    </div>
+    <div className="ml-3 text-sm">
+      <label htmlFor="terms" className="font-medium text-gray-700">
+        I agree to the{' '}
+        <a href="/terms-&-conditions" className="text-[#f56551] hover:text-[#e05544]">
+          Terms and Conditions
+        </a>{' '}
+        and{' '}
+        <a href="/Privacy-Policy" className="text-[#f56551] hover:text-[#e05544]">
+          Privacy Policy
+        </a>
+      </label>
+      {errors.terms && <p className="mt-1 text-sm text-red-600">{errors.terms}</p>}
+    </div>
+  </div>
+
+  <Button
+    type="submit"
+    className="w-full bg-[#f56551] hover:bg-[#e05544] text-white mt-4"
+  >
+    Register
+  </Button>
+</form>
                   
                   <div className="mt-4 text-center">
                     <p className="text-sm text-gray-600">
@@ -233,67 +482,94 @@ function Header() {
               </>
             ) : (
               <>
-                <DialogDescription>
-                  <h2 className='font-bold text-lg text-black'>Sign In to your account</h2>
-                  <p className="text-gray-600">Sign in to check out your travel plan</p>
-                  
-                  <Button
-                    onClick={login}
-                    className="w-full mt-6 flex gap-4 items-center">
-                    <FcGoogle className="h-7 w-7" />Sign in With Google
-                  </Button>
-                  
-                  <div className="relative my-6">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-gray-300"></div>
-                    </div>
-                    <div className="relative flex justify-center text-sm">
-                      <span className="px-2 bg-white text-gray-500">Or continue with</span>
-                    </div>
+              <DialogDescription>
+                <h2 className='font-bold text-lg text-black'>Sign In to your account</h2>
+                <p className="text-gray-600">Sign in to check out your travel plan</p>
+                
+                <Button
+                  onClick={login}
+                  className="w-full mt-6 flex gap-4 items-center">
+                  <FcGoogle className="h-7 w-7" />Sign in With Google
+                </Button>
+                
+                <div className="relative my-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-300"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                  </div>
+                </div>
+                
+                <form className="mt-4 space-y-4" onSubmit={handleLogin}>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Email</label>
+                    <input name="email" type="email" required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Password</label>
+                    <input name="password" type="password" required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" />
                   </div>
                   
-                  <form className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Email</label>
-                      <input type="email" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700">Password</label>
-                      <input type="password" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" required />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <input type="checkbox" id="remember" className="h-4 w-4 text-[#f56551] focus:ring-[#f56551] border-gray-300 rounded" />
-                        <label htmlFor="remember" className="ml-2 block text-sm text-gray-700">
-                          Remember me
-                        </label>
-                      </div>
-                      
-                      <a href="/forgot-password" className="text-sm text-[#f56551] hover:text-[#e05544]">
-                        Forgot password?
-                      </a>
-                    </div>
-                    
-                    <Button type="submit" className="w-full bg-[#f56551] hover:bg-[#e05544]">
-                      Sign In
-                    </Button>
-                  </form>
+                  {!showForgotPassword ? (
+  <div className="text-sm text-center mt-2">
+    <button 
+      type="button"
+      onClick={() => setShowForgotPassword(true)}
+      className="text-[#f56551] hover:text-[#e05544] font-medium"
+    >
+      Forgot Password?
+    </button>
+  </div>
+) : (
+  <div className="mt-4 p-4 border rounded-lg bg-gray-50">
+    <h3 className="font-medium text-sm mb-2">Enter your email to reset password</h3>
+    <div className="flex gap-2">
+      <input
+        type="email"
+        value={forgotPasswordEmail}
+        onChange={(e) => setForgotPasswordEmail(e.target.value)}
+        placeholder="Your email address"
+        className="flex-1 p-2 border rounded-md text-sm"
+        required
+      />
+      <Button
+        type="button"
+        onClick={handleForgotPassword}
+        className="bg-[#f56551] hover:bg-[#e05544] text-white text-sm"
+      >
+        Send Reset Link
+      </Button>
+    </div>
+    <button 
+      type="button"
+      onClick={() => {
+        setShowForgotPassword(false);
+        setForgotPasswordEmail('');
+      }}
+      className="text-xs text-gray-500 mt-2 hover:text-gray-700"
+    >
+      Cancel
+    </button>
+  </div>
+)}
                   
-                  <div className="mt-4 text-center">
-                    <p className="text-sm text-gray-600">
-                      Don't have an account?{' '}
-                      <button 
-                        onClick={() => setIsRegister(true)}
-                        className="font-medium text-[#f56551] hover:text-[#e05544]"
-                      >
-                        Register
-                      </button>
-                    </p>
-                  </div>
-                </DialogDescription>
-              </>
+                  <Button type="submit" className="w-full bg-[#f56551] hover:bg-[#e05544]">Sign In</Button>
+                </form>
+                
+                <div className="mt-4 text-center">
+                  <p className="text-sm text-gray-600">
+                    Don't have an account?{' '}
+                    <button 
+                      onClick={() => setIsRegister(true)}
+                      className="font-medium text-[#f56551] hover:text-[#e05544]"
+                    >
+                      Register
+                    </button>
+                  </p>
+                </div>
+              </DialogDescription>
+            </>
             )}
           </DialogHeader>
         </DialogContent>

@@ -147,9 +147,9 @@ const Hero = () => {
               <div className="bg-white p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4 shadow-sm">
                 <FileDown size={24} className="text-[#f56551]" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-gray-800">PDF Export</h3>
+              <h3 className="text-xl font-bold mb-3 text-gray-800">Delete/PDF Export</h3>
               <p className="text-gray-600">
-                Download beautifully formatted itineraries with maps and contact information.
+                Delete or Download beautifully formatted itineraries with maps and contact information.
               </p>
             </div>
           </div>
