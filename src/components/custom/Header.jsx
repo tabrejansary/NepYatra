@@ -272,7 +272,9 @@ function Header() {
     <div className='shadow-sm sticky top-0 bg-white z-50'>
       <div className='max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-6 py-4'>
         {/* Left side - Brand name only */}
-        <h1 className='text-2xl sm:text-3xl font-bold text-[#f56551]'>NepYatra</h1>
+        <a href="/" className='text-2xl sm:text-3xl font-bold text-[#f56551] hover:text-[#e05544] transition-colors'>
+  NepYatra
+</a>
         
         {/* Mobile menu button */}
         <div className='flex md:hidden'>
