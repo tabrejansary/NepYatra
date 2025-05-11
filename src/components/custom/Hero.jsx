@@ -129,7 +129,7 @@ const Hero = () => {
               </div>
               <h3 className="text-xl font-bold mb-3 text-gray-800">Local Insights</h3>
               <p className="text-gray-600">
-              Tips on the best times to visit each destination, ensuring you experience the key spots at their most convenient and enjoyable..
+              Tips on the best times to visit each destination, ensuring you experience the key spots at their most convenient and enjoyable.
               </p>
             </div>
             
