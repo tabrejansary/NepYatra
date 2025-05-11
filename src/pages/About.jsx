@@ -8,7 +8,7 @@ import { Button } from "../components/ui/button";
 const developers = [
   {
     name: "Tabrez Ansari",
-    photo: "/asset/tbrz.png",
+    photo: "/asset/tbrz3.jpeg",
     role: "Team Lead | Backend Development",
     bio: "Experienced backend developer with a strong foundation in full-stack technologies. Leads the team with a vision for scalable and secure web architecture.",
     skills: ["Javascript","React", "Node.js", "MongoDB", "MySQL"],
@@ -20,38 +20,38 @@ const developers = [
   },
   {
     name: "Suraj Gupta",
-    photo: "/team/sita.jpg",
+    photo: "/asset/suraj.png",
     role: "UI/UX Designer | Frontend Assist",
     bio: "Innovative UI/UX designer crafting intuitive and elegant interfaces. Assists in frontend to ensure design consistency and user satisfaction.",
     skills: ["Figma", "Adobe XD", "User Research","HTML/CSS","Javascript"],
     social: {
-      github: "github.com/sitasharma",
+      github: "github.com/shyamsundarsah123",
       linkedin: "linkedin.com/in/sitasharma",
-      email: "sita@nepyatra.com"
+      email: "Surajgupta@nepyatra.com"
     }
   },
   {
     name: "Karunesh Kumar Tiwari",
-    photo: "/team/aman.jpg",
+    photo: "/asset/karunesh.png",
     role: "Frontend Development",
     bio: "Dedicated frontend developer passionate about responsive and performant web interfaces. Converts design into reality using modern tools.",
     skills: ["React", "Tailwind CSS", "JavaScript"],
     social: {
-      github: "github.com/amangiri",
-      linkedin: "linkedin.com/in/amangiri",
-      email: "aman@nepyatra.com"
+      github: "github.com/Karuneshtiwari",
+      linkedin: "https://www.linkedin.com/in/karunesh-kumar-tiwari-72474a330/",
+      email: "karunesh789tiwari@gmail.com"
     }
   },
   {
     name: "Shyam Sundar Shah",
-    photo: "/team/puja.jpg",
+    photo: "/asset/shyam.jpeg",
     role: "UI/UX Assist | Backend Assist",
     bio: "Bridges the gap between technical implementation and user needs. Supports both UI/UX and backend development to deliver well-rounded features.",
     skills: ["MySQL", "API Integration", "Documentations"],
     social: {
-      github: "github.com/pujakarki",
-      linkedin: "linkedin.com/in/pujakarki",
-      email: "puja@nepyatra.com"
+      github: "github.com/shyamsundarsah123",
+      linkedin: "linkedin.com/in/shyamsundar",
+      email: "shyamsundar@gmail.com"
     }
   },
 ];

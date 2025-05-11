@@ -1,8 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Smartphone, MapPin } from 'lucide-react';
 import { Button } from "../components/ui/button";
 
 const Contact = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitMessage, setSubmitMessage] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+  
+    const name = encodeURIComponent(e.target.name.value);
+    const email = encodeURIComponent(e.target.email.value);
+    const message = encodeURIComponent(e.target.message.value);
+  
+    const url = `https://script.google.com/macros/s/AKfycbw9WoSvZniCaTHfKZZIqsXIabgmsTRHtdCT0s5gYpaASZWiR6D4VkqPuWDTgUcdmjOH/exec?name=${name}&email=${email}&message=${message}`;
+  
+    try {
+      await fetch(url, { method: "GET", mode: "no-cors" });
+      setSubmitStatus("success");
+      setSubmitMessage("Message sent!");
+      e.target.reset();
+    } catch (error) {
+      setSubmitStatus("error");
+      setSubmitMessage("Error sending message (but it might still work)");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow">
@@ -38,34 +65,59 @@ const Contact = () => {
           {/* Contact Form */}
           <section className="bg-white p-8 rounded-xl shadow-md max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">Send Us a Message</h2>
-            <form className="space-y-6">
+            
+            {/* Submission Status Message */}
+            {submitStatus && (
+              <div className={`mb-6 p-4 rounded-lg ${
+                submitStatus === 'success' 
+                  ? 'bg-green-100 text-green-800' 
+                  : 'bg-red-100 text-red-800'
+              }`}>
+                {submitMessage}
+              </div>
+            )}
+            
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label className="block mb-1 font-semibold text-gray-700">Name</label>
+                <label htmlFor="name" className="block mb-1 font-semibold text-gray-700">Name</label>
                 <input 
+                  id="name"
+                  name="name"
                   type="text" 
                   placeholder="Your Name" 
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f56551]"
+                  required
                 />
               </div>
               <div>
-                <label className="block mb-1 font-semibold text-gray-700">Email</label>
+                <label htmlFor="email" className="block mb-1 font-semibold text-gray-700">Email</label>
                 <input 
+                  id="email"
+                  name="email"
                   type="email" 
                   placeholder="you@example.com" 
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f56551]"
+                  required
                 />
               </div>
               <div>
-                <label className="block mb-1 font-semibold text-gray-700">Message</label>
+                <label htmlFor="message" className="block mb-1 font-semibold text-gray-700">Message</label>
                 <textarea 
+                  id="message"
+                  name="message"
                   rows="5" 
                   placeholder="Write your message here..." 
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f56551]"
+                  required
                 ></textarea>
               </div>
               <div className="text-center">
-                <Button type="submit" className="bg-[#f56551] text-white px-6 py-2 rounded-lg hover:bg-[#e15445] text-lg">
-                  Send Message
+                <Button 
+                  type="submit" 
+                  className="bg-[#f56551] text-white px-6 py-2 rounded-lg hover:bg-[#e15445] text-lg"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
               </div>
             </form>
