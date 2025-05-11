@@ -76,10 +76,25 @@ function Header() {
     console.log(user)
   }, [user])
 
-  const login = useGoogleLogin({
-    onSuccess: (res) => GetUserProfile(res),
-    onError: (error) => console.log(error)
-  })
+  const loginWithGoogle = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const user = result.user;
+        localStorage.setItem('user', JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          firstName: user.displayName?.split(' ')[0] || 'User',
+          picture: user.photoURL
+        }));
+        setOpenDialog(false);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Google login error:", error.message);
+        alert("Login failed: " + error.message);
+      });
+  };
+  
 
   const GetUserProfile = (tokenInfo) => {
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo.access_token}`, {
@@ -486,9 +501,8 @@ const handleRegister = async (e) => {
                 <h2 className='font-bold text-lg text-black'>Sign In to your account</h2>
                 <p className="text-gray-600">Sign in to check out your travel plan</p>
                 
-                <Button
-                  onClick={login}
-                  className="w-full mt-6 flex gap-4 items-center">
+                <Button onClick={loginWithGoogle} className="w-full mt-6 flex gap-4 items-center">
+
                   <FcGoogle className="h-7 w-7" />Sign in With Google
                 </Button>
                 

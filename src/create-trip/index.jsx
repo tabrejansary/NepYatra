@@ -12,7 +12,9 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog"
 import { FcGoogle } from "react-icons/fc";
-import { useGoogleLogin } from '@react-oauth/google';
+import { auth, googleProvider } from '@/service/firebaseConfig';
+import { signInWithPopup } from 'firebase/auth';
+
 import axios from 'axios';
 import { doc, setDoc } from "firebase/firestore";
 import { app, db } from '@/service/firebaseConfig';
@@ -88,10 +90,25 @@ function CreateTrip() {
     navigate('/view-trip/' + docId)
   }
 
-  const login = useGoogleLogin({
-    onSuccess: (res) => GetUserProfile(res),
-    onError: (error) => console.log(error)
-  })
+  const loginWithGoogle = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const user = result.user;
+        localStorage.setItem('user', JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          firstName: user.displayName?.split(' ')[0] || 'User',
+          picture: user.photoURL
+        }));
+        setOpenDialog(false);
+        onGenerateTrip();
+      })
+      .catch((error) => {
+        console.error("Google login error:", error.message);
+        alert("Login failed: " + error.message);
+      });
+  };
+  
 
   const GetUserProfile = (tokenInfo) => {
     axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${tokenInfo.access_token}`, {
@@ -178,9 +195,8 @@ function CreateTrip() {
 <h2 className='font-bold text-lg'>Sign In to check out your travel plan</h2>
 <p>Sign in to the App with Google authentication securely</p>
 
-              <Button
-                onClick={login}
-                className="w-full mt-6 flex gap-4 items-center">
+<Button onClick={loginWithGoogle} className="w-full mt-6 flex gap-4 items-center">
+
                 <FcGoogle className="h-7 w-7" />Sign in With Google
               </Button>
             </DialogDescription>
