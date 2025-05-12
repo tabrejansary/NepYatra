@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { Sparkles, MapPin, Smartphone, FileDown, Wand2, Share2, Mountain, Globe, Heart } from 'lucide-react';
+import { Sparkles, MapPin, Smartphone, FileDown, Wand2, Share2, Mountain, Globe, Heart, Star } from 'lucide-react';
+
+import VideoPromo from './VideoPromo';
+
 
 const Hero = () => {
+
+
+
+  
   // Image carousel state
   const images = [
     '/asset/world1.png',
@@ -24,6 +31,98 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, [images.length]);
 
+
+    // Reviews state
+    const testimonials = [
+      {
+        name: "Elena Hartley",
+        title: "Adventure Enthusiast @Wanderlust Trails",
+        text: "This app makes organizing travel plans a breeze! All the must-see spots are right at your fingertips. Definitely a game changer for trip planning.",
+        rating: 5,
+        image: "/asset/h.jpg"
+      },
+      {
+        name: "Liam Foster",
+        text: "Absolutely love this app! So intuitive and the AI features make it incredibly convenient to plan trips effortlessly.",
+        rating: 5,
+        initial: "L"
+      },
+      {
+        name: "Maya Linton",
+        text: "This is officially my go-to travel app! It’s super user-friendly, and the recommendations for local attractions are spot on. Big thanks to the developers! 👏👏",
+        rating: 5,
+        image: "/asset/g.jpg"
+      },
+      
+      {
+        name: "Eric Franco",
+        text: "Absolutely love this app! It is so helpful when planning my trips. I especially love the optimize route option. When I have all my information in place it is fabulous!",
+        rating: 5,
+        image: "/asset/a.jpg"
+      },
+      {
+        name: "Belinda and Kathy Kohles",
+        text: "I have used several trip planning apps. This one by far is the best. The interaction between google maps makes the planning so much easier.",
+        rating: 5,
+        image: "/asset/b.jpg"
+      },
+      {
+        name: "Lydia Yang",
+        title: "Founder @LydiaScapes Adventures",
+        text: "So much easier to visualize and plan a road trip to my favourite rock climbing destinations and explore the area around.",
+        rating: 5,
+        initial: "L"
+      },
+      
+        {
+          name: "Nadim",
+          title: "Travel Blogger @CoupleTravels",
+          text: "Planning your trip by having all the attractions already plugged into a map makes trip planning so much easier.",
+          rating: 5,
+          image: "/asset/f.jpeg"
+        },
+        {
+          name: "Sharon Brewster",
+          text: "Amazing app! Easy to use, love the AI functionality.",
+          rating: 5,
+          initial: "S"
+        },
+        {
+          name: "Jayson Oite",
+          text: "It seems to be this is my new travel app buddy. Very handy, convenient and very easy to use. It also recommends tourist destinations and nearby places. Kudos to the programmer! 👏👏",
+          rating: 5,
+          image: "/asset/d.webp"
+        },
+        
+        {
+          name: "Marcus Chen",
+          title: "Solo Traveler @WanderWithMarcus",
+          text: "This app is a game-changer for solo travel. The itinerary suggestions and real-time updates helped me discover hidden gems effortlessly.",
+          rating: 5,
+          image: "/asset/e11.jpg"
+        },
+        {
+          name: "Talia Rivera",
+          text: "The app’s interface is so intuitive! I love how it syncs my plans across devices and suggests dining options near my stops.",
+          rating: 5,
+          initial: "T"
+        },
+        {
+          name: "Amir Hassan",
+          text: "Perfect for family vacations! The app made it simple to plan kid-friendly activities and keep everyone’s preferences in one place.",
+          rating: 5,
+          image: "/asset/i.jpg"
+        }
+      ];
+    const [visibleReviews, setVisibleReviews] = useState(6);
+
+    const handleSeeMoreReviews = () => {
+      setVisibleReviews((prev) => Math.min(prev + 3, testimonials.length));
+    };
+
+
+
+ 
   return (
     <div className="font-sans min-h-screen flex flex-col">
       {/* Hero Section */}
@@ -83,6 +182,8 @@ const Hero = () => {
 
       {/* Rest of your existing code remains the same */}
        {/* Features Section */}
+
+       <VideoPromo />
        <section className="bg-white py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -156,13 +257,132 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* Testimonial/CTA Section */}
-      <section className="bg-[#f56551] py-16 px-4 text-white">
+      <section className="bg-white py-16 px-4">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">Explore hundreds of places to visit</h2>
+          <p className="text-xl text-gray-600">for every corner of the world</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* First row - 4 cities */}
+          <div className="relative rounded-xl overflow-hidden h-80 group">
+            <img
+              src="/asset/paris.jpg"
+              alt="Paris"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4 text-white">
+              <h3 className="text-2xl font-bold">Paris</h3>
+              <p className="text-sm opacity-90">Eiffel Tower · Louvre Museum · Notre-Dame Cathedral</p>
+            </div>
+          </div>
+
+          <div className="relative rounded-xl overflow-hidden h-80 group">
+            <img
+              src="/asset/tokyo.jpg"
+              alt="Tokyo"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4 text-white">
+              <h3 className="text-2xl font-bold">Tokyo</h3>
+              <p className="text-sm opacity-90">Tokyo Tower · Sensō-ji Temple · Shibuya Crossing</p>
+            </div>
+          </div>
+
+          <div className="relative rounded-xl overflow-hidden h-80 group">
+            <img
+              src="/asset/rome.jpg"
+              alt="Rome"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4 text-white">
+              <h3 className="text-2xl font-bold">Rome</h3>
+              <p className="text-sm opacity-90">Colosseum · Vatican City · Pantheon</p>
+            </div>
+          </div>
+
+          <div className="relative rounded-xl overflow-hidden h-80 group">
+            <img
+              src="/asset/bangkok.jpg"
+              alt="Bangkok"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4 text-white">
+              <h3 className="text-2xl font-bold">Bangkok</h3>
+              <p className="text-sm opacity-90">Grand Palace · Wat Arun · Chatuchak Weekend Market</p>
+            </div>
+          </div>
+
+          {/* Second row - 2 wider cities */}
+          <div className="relative rounded-xl overflow-hidden h-80 md:col-span-2 group">
+            <img
+              src="/asset/newyork.jpg"
+              alt="New York"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4 text-white">
+              <h3 className="text-2xl font-bold">New York</h3>
+              <p className="text-sm opacity-90">Statue of Liberty · Central Park · Times Square</p>
+            </div>
+          </div>
+
+          <div className="relative rounded-xl overflow-hidden h-80 md:col-span-2 group">
+            <img
+              src="/asset/london.jpg"
+              alt="London"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4 text-white">
+              <h3 className="text-2xl font-bold">London</h3>
+              <p className="text-sm opacity-90">Tower of London · British Museum · Buckingham Palace</p>
+            </div>
+          </div>
+
+          {/* Third row - Dubai and Sydney */}
+          <div className="relative rounded-xl overflow-hidden h-80 md:col-span-1 lg:col-span-2 group">
+            <img
+              src="/asset/dubai.jpg"
+              alt="Dubai"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4 text-white">
+              <h3 className="text-2xl font-bold">Dubai</h3>
+              <p className="text-sm opacity-90">Burj Khalifa · Dubai Mall · Palm Jumeirah</p>
+            </div>
+          </div>
+
+          <div className="relative rounded-xl overflow-hidden h-80 md:col-span-1 lg:col-span-2 group">
+            <img
+              src="/asset/sydney.jpg"
+              alt="Sydney"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-4 text-white">
+              <h3 className="text-2xl font-bold">Sydney</h3>
+              <p className="text-sm opacity-90">Opera House · Harbour Bridge · Bondi Beach</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link to="/create-trip">
+            <Button className="px-6 py-3 rounded-lg bg-[#f56551] hover:bg-[#e05544] text-lg">
+              Explore More Destinations
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+
+
+           {/* Testimonial/CTA Section */}
+           <section className="bg-[#f56551] py-16 px-4 text-white">
         <div className="max-w-4xl mx-auto text-center">
           <Heart size={48} className="mx-auto mb-6" />
           <h2 className="text-3xl font-bold mb-6">Travel Smarter, Not Harder</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            "NepYatra saved me hours of research and helped me discover places I never would have found on my own." - One of our User
+            "NepYatra saved me hours of research and helped me discover places I never would have found on my own." - One of Traveller
           </p>
           <Link to="/create-trip">
             <Button className="px-8 py-4 rounded-lg bg-white text-[#f56551] hover:bg-gray-100 text-lg font-bold">
@@ -171,6 +391,60 @@ const Hero = () => {
           </Link>
         </div>
       </section>
+
+      <section className="py-16 px-4 bg-gray-50">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What travelers are raving about</h2>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                  Over 1 thousand people have already tried NepYatra and loved its easy trip planning features.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {testimonials.slice(0, visibleReviews).map((testimonial, index) => (
+                  <div key={index} className="bg-white p-6 rounded-xl shadow-md">
+                    <div className="flex items-center mb-4">
+                      {testimonial.image ? (
+                        <img
+                          src={testimonial.image}
+                          alt={testimonial.name}
+                          className="h-12 w-12 rounded-full mr-4 object-cover"
+                        />
+                      ) : (
+                        <div className="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-medium text-xl mr-4">
+                          {testimonial.initial}
+                        </div>
+                      )}
+                      <div>
+                        <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+                        {testimonial.title && <p className="text-sm text-gray-500">{testimonial.title}</p>}
+                      </div>
+                    </div>
+                    <div className="flex mb-3">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-current text-amber-400" />
+                      ))}
+                    </div>
+                    <p className="text-gray-700 text-sm">{testimonial.text}</p>
+                  </div>
+                ))}
+              </div>
+              {visibleReviews < testimonials.length && (
+                <div className="text-center mt-12">
+                  <button
+                    onClick={handleSeeMoreReviews}
+                    className="text-[#f56551] font-semibold hover:underline"
+                  >
+                    See more reviews
+                  </button>
+                </div>
+              )}
+            </div>
+          </section>
+    
+
+
+
 
       {/* Custom Footer */}
       <footer className="bg-gray-900 text-white py-12 px-4">
