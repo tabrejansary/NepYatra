@@ -52,20 +52,24 @@ Travel Itineraries: Detailed daily travel plans including attractions, timings, 
 Home Page:
 <img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/hompage.png" alt="">
 
-Google OAuth Sign in:
-  <img src="https://github.com/barika001/ai-trip-planner/blob/main/public/asset/2.png" alt="">
+Google OAuth Register/Sign in: <br>
+Register Via Email:
+  <img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/register.png" alt="">
+
+  Sign in: <br>
+  <img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/signin.png" alt="">
   
 Create Trip Page:
-<img src="https://github.com/barika001/ai-trip-planner/blob/main/public/asset/4.4.png" alt="">
+<img src="/asset/createtrip.png" alt="">
 
 View Trip Page: AI-generated Hotel Recommendations & Places to Visit
-<img src="https://github.com/barika001/ai-trip-planner/blob/main/public/asset/7.png" alt="" width="75%" align="center">
+<img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/viewtrip.png" alt="" width="75%" align="center">
 
 My Trips Page:
-<img src="https://github.com/barika001/ai-trip-planner/blob/main/public/asset/6.png" alt="">
+<img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/mytrips.png" alt="">
 
 Responsive view on mobile: <br>
-<img src="https://github.com/barika001/ai-trip-planner/blob/main/public/asset/8.jpg" alt="" width="30%" align="center">
+<img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/responsive.png" alt="" width="30%" align="center">
 </p>
  
 

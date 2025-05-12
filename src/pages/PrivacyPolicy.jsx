@@ -114,8 +114,8 @@ const PrivacyPolicy = () => {
             <div>
               <h4 className="font-bold mb-4">Resources</h4>
               <ul className="space-y-2">
-                <li><a href="/blog" className="text-gray-400 hover:text-white">Travel Blog</a></li>
-                <li><a href="/guides" className="text-gray-400 hover:text-white">Destination Guides</a></li>
+                <li><a href="https://theworldtravelguy.com/" className="text-gray-400 hover:text-white">Travel Blog</a></li>
+                <li><a href="/destination-guide" className="text-gray-400 hover:text-white">Destination Guides</a></li>
                 <li><a href="/faq" className="text-gray-400 hover:text-white">FAQ</a></li>
               </ul>
             </div>
