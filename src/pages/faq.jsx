@@ -195,7 +195,9 @@ const FAQ = () => {
       <CTA>
         <h3>Ready to Explore the World?</h3>
         <p>Let NepYatra's AI create your perfect travel itinerary in minutes</p>
-        <button>Start Planning Now</button>
+        <button onClick={() => window.location.href = '/create-trip'}>
+    Start Planning Now
+  </button>
       </CTA>
     </FAQContainer>
   );
