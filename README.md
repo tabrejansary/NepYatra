@@ -33,45 +33,45 @@
 
 <br><h2 id="features">🚀 Features</h2>
 
--AI-Powered Travel Plans: Generate personalized travel itineraries and hotel recommendations using Google Generative AI. <br>
--Dynamic Place Information: Retrieve and display detailed information and photos of places and hotels using Google Places API.<br>
--User Authentication: Secure user login and authentication with Google OAuth.<br>
--Interactive UI: User-friendly and responsive interface designed with TailwindCSS.<br>
--Data Storage: Persistent storage of user trip data in Firebase Firestore.<br>
--Hidden Gems: Discover off-the-beaten-path locations and authentic experiences that most travelers miss.<br>
--Smart Recommendations: Hotels, restaurants, and activities curated specifically for your travel profile.<br>
--Local Insights: Tips on the best times to visit each destination, ensuring you experience the key spots at their most convenient and enjoyable.<br>
--Easy Sharing: Share your travel plans with companions or download them for offline access.<br>
--Delete Plans: Easily delete planned trips after visiting and add new ones.<br>
-Travel Itineraries: Detailed daily travel plans including attractions, timings, and ticket pricing.<br>
+-AI-Powered Travel Plans: Generate personalized travel itineraries and hotel recommendations using Google Generative AI. <br><br>
+-Dynamic Place Information: Retrieve and display detailed information and photos of places and hotels using Google Places API.<br><br>
+-User Authentication: Secure user login and authentication with Google OAuth.<br><br>
+-Interactive UI: User-friendly and responsive interface designed with TailwindCSS.<br><br>
+-Data Storage: Persistent storage of user trip data in Firebase Firestore.<br><br>
+-Hidden Gems: Discover off-the-beaten-path locations and authentic experiences that most travelers miss.<br><br>
+-Smart Recommendations: Hotels, restaurants, and activities curated specifically for your travel profile.<br><br>
+-Local Insights: Tips on the best times to visit each destination, ensuring you experience the key spots at their most convenient and enjoyable.<br><br>
+-Easy Sharing: Share your travel plans with companions or download them for offline access.<br><br>
+-Delete Plans: Easily delete planned trips after visiting and add new ones.<br><br>
+Travel Itineraries: Detailed daily travel plans including attractions, timings, and ticket pricing.<br><br>
 
  
 <br><h2 id="layout">🎨 Layout</h2>
 
 <p>
-Home Page:
+<b>Home Page</b>:
 <img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/hompage.png" alt="">
 
-Google OAuth Register/Sign in: <br>
-Register Via Email:
+<b>Google OAuth Register/Sign in: </b><br>
+Register Via Email:<br>
   <img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/register.png" alt="">
-
+<br>
   Sign in: <br>
   <img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/signin.png" alt="">
-  
-Create Trip Page:
-<img src="/asset/createtrip.png" alt="">
-
-View Trip Page: AI-generated Hotel Recommendations & Places to Visit
+  <br>
+<b>Create Trip Page:</b>
+<img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/createtrip.png" alt="">
+<br>
+<b>View Trip Page: AI-generated Hotel Recommendations & Places to Visit</b>
 <img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/viewtrip.png" alt="" width="75%" align="center">
-
-My Trips Page:
+<br>
+<b>My Trips Page:</b>
 <img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/mytrips.png" alt="">
-
-Responsive view on mobile: <br>
+<br>
+<b>Responsive view on mobile:</b> <br>
 <img src="https://github.com/tabrejansary/NepYatra/blob/main/public/asset/responsive.png" alt="" width="30%" align="center">
 </p>
- 
+ <br>
 
 <h2 id="pre">🗁 Prerequisites</h2>
 
