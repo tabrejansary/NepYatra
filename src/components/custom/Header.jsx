@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { sendEmailVerification } from "firebase/auth";
 import { Button } from '../ui/button'
+
 import {
   Popover,
   PopoverContent,

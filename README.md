@@ -1,5 +1,6 @@
                   
-<h1 align="center" style="font-weight: bold;">Full-Stack Trip Planner Web App</h1>
+<h1 align="center" style="font-weight: bold;">NepYatra - A Smart AI Travel 
+      Itinerary Planner</h1>
 
 <p align="center">
 <a href="#tech">Technologies |</a>
@@ -32,19 +33,24 @@
 
 <br><h2 id="features">🚀 Features</h2>
 
-- AI-Powered Travel Plans: Generate personalized travel itineraries and hotel recommendations using Google Generative AI.
-- Dynamic Place Information: Retrieve and display detailed information and photos of places and hotels using Google Places API.
-- User Authentication: Secure user login and authentication with Google OAuth.
-- Interactive UI: User-friendly and responsive interface designed with TailwindCSS.
-- Data Storage: Persistent storage of user trip data in Firebase Firestore.
-- Travel Itineraries: Detailed daily travel plans including attractions, timings, and ticket pricing.
+-AI-Powered Travel Plans: Generate personalized travel itineraries and hotel recommendations using Google Generative AI.
+-Dynamic Place Information: Retrieve and display detailed information and photos of places and hotels using Google Places API.
+-User Authentication: Secure user login and authentication with Google OAuth.
+-Interactive UI: User-friendly and responsive interface designed with TailwindCSS.
+-Data Storage: Persistent storage of user trip data in Firebase Firestore.
+-Hidden Gems: Discover off-the-beaten-path locations and authentic experiences that most travelers miss.
+-Smart Recommendations: Hotels, restaurants, and activities curated specifically for your travel profile.
+-Local Insights: Tips on the best times to visit each destination, ensuring you experience the key spots at their most convenient and enjoyable.
+-Easy Sharing: Share your travel plans with companions or download them for offline access.
+-Delete Plans: Easily delete planned trips after visiting and add new ones.
+Travel Itineraries: Detailed daily travel plans including attractions, timings, and ticket pricing.
 
  
 <br><h2 id="layout">🎨 Layout</h2>
 
 <p>
 Home Page:
-<img src="https://github.com/barika001/ai-trip-planner/blob/main/public/asset/1.1.png" alt="">
+<img src="/asset/homepage.png" alt="">
 
 Google OAuth Sign in:
   <img src="https://github.com/barika001/ai-trip-planner/blob/main/public/asset/2.png" alt="">
